@@ -8,7 +8,7 @@ framework_version: 1.0.0
 <!-- You can use results from PI, DISC, Myers-Briggs, StrengthsFinder, or a self-assessment -->
 
 ## Overview
-[YOUR_NAME]'s behavioral assessment identifies them as a **[PROFILE_TYPE]** pattern. [1-2 SENTENCE_SUMMARY].
+No formal behavioral assessment (PI, DISC, Myers-Briggs, StrengthsFinder) is on file for Alex Morgan. The "How You Work Best" section below includes one inference from his LinkedIn About text; everything else in this file remains a template until a formal assessment or self-assessment interview is completed.
 
 ## Core Behavioral Drives
 
@@ -28,6 +28,7 @@ framework_version: 1.0.0
 - [ENVIRONMENT_PREFERENCE_1]
 - [ENVIRONMENT_PREFERENCE_2]
 - [ENVIRONMENT_PREFERENCE_3]
+- *[Inferred from LinkedIn About - review before relying on this]*: Motivated by continuous learning and collaborating on innovative projects that leverage cutting-edge technologies, with an emphasis on quality and efficiency
 
 ## Growth Areas (frame positively in applications)
 - **[AREA_1]:** [HOW_TO_FRAME_IT_POSITIVELY]

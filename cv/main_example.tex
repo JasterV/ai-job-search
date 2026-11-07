@@ -1,14 +1,27 @@
-%% Example CV - [YOUR_NAME]
+%% Example CV - Alex Morgan
 %% Comprehensive overview of all competencies, experience, and achievements.
 %% Use as a master reference when tailoring role-specific CVs.
 %%
 %% SETUP: Run /setup to populate this with your actual information.
 %% Compile with: lualatex main_example.tex
 %% (pdflatex often fails on modern MiKTeX with fontawesome5 font-expansion errors.)
+%%
+%% NOTE: This copy targets a single page by explicit request (easier for HR
+%% to skim) - it deliberately overrides the framework's default 2-page CV
+%% standard documented in 05-cv-templates.md. If a future tailored CV should
+%% go back to 2 pages, drop the extra spacing/font compression below and
+%% restore the Core Competencies section.
 
 \documentclass[11pt,a4paper,sans]{moderncv}
 \moderncvstyle{banking}
 \moderncvcolor{blue}
+
+% banking's default icon set (FontAwesome6 + academicons) renders contact icons as
+% broken fallback text (e.g. "MOBILE-ANDROID-ALT") on this system's hand-installed
+% FA6 build. marvosym ships in every standard TeX Live install and its phone/email/
+% bullet glyphs render reliably, so force it here instead of debugging FA6 glyph
+% mapping skew.
+\moderncvicons{marvosym}
 
 % Force the name and section headings to render in moderncv blue (color1).
 % Default banking leaves them black: moderncvstylebanking.sty's \colorlet
@@ -16,11 +29,40 @@
 % frozen before \moderncvcolor runs. Re-let them after. \namefont is the hook
 % every name-style macro routes through, so this also works on moderncv 2.3.1
 % (Debian/Ubuntu apt), which has no \firstnamestyle/\lastnamestyle at all.
-\renewcommand*{\namefont}{\fontsize{34}{36}\bfseries\upshape}
+% Sized down from the stock 34/36pt for the single-page header budget below.
+\renewcommand*{\namefont}{\fontsize{26}{28}\bfseries\upshape}
 \colorlet{firstnamecolor}{color1}
 \colorlet{lastnamecolor}{color1}
 \colorlet{namecolor}{color1}
 \renewcommand*{\sectionstyle}[1]{{\sectionfont\color{color1}#1}}
+
+% Every technology / programming language / architecture-pattern name in body
+% text is wrapped in \tech{} for consistent bold+accent-colour emphasis
+% throughout the document (profile statement, experience bullets, project
+% description) - this is now where the skill list itself lives, since there
+% is no separate Core Competencies section on the single-page layout.
+\newcommand{\tech}[1]{\textbf{\textcolor{color1}{#1}}}
+
+% microtype's character protrusion/expansion adjusts glyph widths/positions
+% at font/color boundaries and at line-stretch points, which was producing
+% phantom spaces in pypdf's text-layer extraction ("Tokio" -> "T okio",
+% invisible on the rendered page). Disabling both fixed most occurrences.
+% A handful of pypdf-only cases remain (confirmed: poppler's pdftotext -
+% the project's documented fallback extractor - reads the same PDF cleanly
+% with no splits at all), so this is a pypdf parsing quirk rather than an
+% actual defect in the PDF; not worth chasing further with more microtype
+% settings (kerning=false was also tried and made no difference).
+\microtypesetup{protrusion=false,expansion=false}
+
+% A light tint of the accent colour (not a full-saturation block) sits behind
+% the header so name/address/icon colours stay legible on it unchanged, and
+% so it doesn't fight with the dark-neutral link colour defined below.
+\colorlet{headerbandcolor}{color1!12}
+
+% Links (LinkedIn/GitHub/project links) read as the same blue as the name and
+% section headings by default - switch them to a dark neutral instead so the
+% accent colour stays reserved for headings/\tech{} emphasis.
+\definecolor{linkgray}{HTML}{333333}
 
 \usepackage[utf8]{inputenc}
 % pdflatex fallback only (the documented engine is lualatex, which skips this
@@ -37,56 +79,122 @@
 % through \PassOptionsToPackage instead, which is what removes that clash.
 \AtEndPreamble{\hypersetup{
     colorlinks=true,
-    linkcolor=blue,
-    filecolor=magenta,
-    urlcolor=blue,
-    pdftitle={[YOUR_NAME] - CV},
+    linkcolor=linkgray,
+    filecolor=linkgray,
+    urlcolor=linkgray,
+    pdftitle={Alex Morgan - CV},
     % Keep pdfpagemode=UseNone: this block runs after moderncv's own
     % \AtEndPreamble (moderncv.cls sets pdfpagemode there), so a FullScreen
     % value here would win and open every CV in fullscreen presentation mode.
     pdfpagemode=UseNone,
 }}
-\usepackage[scale=0.80]{geometry}
+% Slightly tighter margins than the 2-page stock 0.80 scale - part of the
+% single-page budget, not a "squeeze to fit" hack on top of unchanged content
+% (the content itself was cut - see Professional Experience).
+\usepackage[scale=0.85,top=1.3cm,bottom=1.3cm]{geometry}
 \usepackage{import}
+% Already an indirect moderncv dependency (moderncviconstikz, skill matrices),
+% loaded explicitly here since the header band below relies on it directly.
+\usepackage{tikz}
 
 % personal data
-\name{[First]}{[Last]}
+\name{Alex}{Morgan}
 % If you have no address to list, DELETE this whole line. \address{}{}{} fails
 % with "There's no line here to end" on every moderncv version.
-\address{[Your Address, City, Country]}{}{}
-\phone[mobile]{[+XX XXXXXXXXXX]}
-\email{[your.email@example.com]}
-\extrainfo{\href{[https://linkedin.com/in/your-profile]}{LinkedIn}, \href{[https://github.com/your-username]}{GitHub}}
+\address{Palermo, Italy}{}{}
+\phone[mobile]{+1 555-0100}
+\email{alex.morgan@example.com}
+\extrainfo{\href{https://linkedin.com/in/jaster-victor}{\underline{LinkedIn}}, \href{https://github.com/JasterV}{\underline{GitHub}}}
+% Rendered inside the header band by the \makehead override below.
+\newcommand{\cvlanguages}{Spanish (native)~\textbullet~Catalan (native)~\textbullet~English (native)~\textbullet~Italian (fluent)}
+
+% Redefine moderncv banking's header (originally in moderncvheadiii.sty) to:
+%  1. add breathing room between the name/title line and the address line
+%     below it (the vendor macro uses a bare `\\`, i.e. one baselineskip -
+%     reads as cramped at this name font size);
+%  2. paint a light accent-tinted background band behind it spanning the
+%     full physical page width (edge to edge, not just the text column) via
+%     a tikz page-absolute overlay, so the page doesn't open on a flat white
+%     block and there's no white gutter on either side of the band. This is
+%     independent of the normal text margins, so \headerbandheight below is
+%     tuned by eye against the actual header content, not derived from it.
+%  3. append a languages line under the contact details, so languages sit
+%     with the rest of the identity/contact info instead of in their own
+%     section further down the page.
+% \@firstname, \if@details, etc. are internal moderncv commands whose `@` is
+% only letter-catcode inside a .sty/.cls - in a .tex document it is "other"
+% catcode by default, so without \makeatletter/\makeatother here \@firstname
+% parses as the primitive \@ followed by literal text "firstname" (this is
+% exactly what broke the header on the first attempt: the name/contact block
+% printed as the literal words "firstname lastname | title" with nothing else,
+% because the whole \if@details{...} conditional mis-tokenized).
+\newlength{\headerbandheight}
+\setlength{\headerbandheight}{3.6cm}
+\makeatletter
+\renewcommand*{\makehead}{%
+  \begin{tikzpicture}[overlay]
+    \fill[headerbandcolor] (current page.north west) rectangle ([yshift=-\headerbandheight]current page.north east);
+  \end{tikzpicture}%
+  \setlength{\makeheaddetailswidth}{0.8\textwidth}%
+  \hfil%
+  \parbox{\makeheaddetailswidth}{%
+    \centering%
+    \firstnamestyle{\@firstname\ }\lastnamestyle{\@lastname}%
+    \ifthenelse{\equal{\@title}{}}{}{\titlestyle{~|~\@title}}%
+    \if@details{%
+      \\[6pt]%
+      \addressfont\color{addresscolor}%
+      \ifthenelse{\isundefined{\@addressstreet}}{}{\addtomakeheaddetails{\addresssymbol\@addressstreet}%
+        \ifthenelse{\equal{\@addresscity}{}}{}{\addtomakeheaddetails[~--~]{\@addresscity}}%
+        \ifthenelse{\equal{\@addresscountry}{}}{}{\addtomakeheaddetails[~--~]{\@addresscountry}}%
+        \flushmakeheaddetails\@firstmakeheaddetailselementtrue\\}%
+      \ifthenelse{\isundefined{\@born}}{}{\addtomakeheaddetails{\bornsymbol\@born}}%
+      \collectionloop{phones}{%
+        \addtomakeheaddetails{\csname\collectionloopkey phonesymbol\endcsname\collectionloopitem}}%
+      \ifthenelse{\isundefined{\@email}}{}{\addtomakeheaddetails{\emailsymbol\emaillink{\@email}}}%
+      \ifthenelse{\isundefined{\@homepage}}{}{\addtomakeheaddetails{\homepagesymbol%
+        \ifthenelse{\equal{\@homepageprotocol}{http}}{\httplink{\@homepage}}{\httpslink{\@homepage}}}}%
+      \collectionloop{socials}{%
+        \addtomakeheaddetails{\csname\collectionloopkey socialsymbol\endcsname\collectionloopitem}}%
+      \ifthenelse{\isundefined{\@extrainfo}}{}{\addtomakeheaddetails{\@extrainfo}}%
+      \flushmakeheaddetails%
+      \\[4pt]%
+      {\small\cvlanguages}%
+      }\fi%
+  }}
+\makeatother
 
 \begin{document}
 
+% Pulls the header up closer to the physical page top - the vendor top
+% margin reads as excessive at this name font size. \vspace* (starred) is
+% required: plain \vspace at the very top of a page is discarded by TeX's
+% page-breaking rules.
+\vspace*{-1.1cm}
 \makecvtitle
 
 % ============================================================
 %     PROFILE STATEMENT
 % ============================================================
 
-\vspace{6pt}
-\small{[Write a 3-5 line profile statement tailored to the role you're applying for. Focus on what makes you uniquely qualified. Example: "Data scientist with a PhD in [field] and X years of industry experience. Combines deep domain expertise in [domain] with strong applied machine learning and Python development skills. Experienced in developing end-to-end ML pipelines, from data ingestion to stakeholder-facing dashboards."]}
+\vspace{4pt}
+\small{Senior Software Engineer with 5+ years building production backend systems in \tech{Rust} and \tech{Elixir}, specializing in extracting legacy monoliths into resilient \tech{microservices}. Deep experience with async \tech{Rust} (\tech{Tokio}), \tech{gRPC}/\tech{Protobuf} API design, and \tech{Elixir}'s \tech{OTP}/\tech{BEAM} for \tech{CQRS} and event-sourced domains. Has led end-to-end ownership of architecture decisions, from \tech{hexagonal architecture} service design to high-resolution observability with \tech{OpenTelemetry}.}
 
 % ============================================================
 %     CORE COMPETENCIES
 % ============================================================
+% Condensed to 4 lines (vs. the 6-category version on the 2-page layout) -
+% every term here is also \tech{}-highlighted inline in Professional
+% Experience below, so this section only needs to work as a fast skim list,
+% not carry the full detail on its own.
 
 \section{Core Competencies}
 \vspace{1pt}
 \begin{itemize}
-
-\item \textbf{[Skill Category 1]}: [Specific skills, frameworks, tools. Be concrete.]
-
-\item \textbf{[Skill Category 2]}: [Specific skills, frameworks, tools.]
-
-\item \textbf{[Skill Category 3]}: [Specific skills, frameworks, tools.]
-
-\item \textbf{[Skill Category 4]}: [Domain expertise, methods, approaches.]
-
-\item \textbf{[Skill Category 5]}: [Tools, platforms, software.]
-
+\item \textbf{Rust}: Tokio/Tower/Tonic/Axum, gRPC/Protobuf, hexagonal architecture
+\item \textbf{Elixir/OTP}: Phoenix, LiveView, Ash, Nerves, CQRS/Event Sourcing
+\item \textbf{Infra \& APIs}: Kubernetes, AWS, Postgres, Docker, GraphQL, Kafka, RabbitMQ
+\item \textbf{Frontend}: Elm, Next.js, TypeScript/Node.js
 \end{itemize}
 
 % ============================================================
@@ -94,36 +202,59 @@
 % ============================================================
 
 \section{Professional Experience}
-\vspace{3pt}
+\vspace{1pt}
 \begin{itemize}
 
 % --- Most Recent Role ---
-\item{\cventry{[YYYY-Present]}{[Job Title]}{[Company]}{[City, Country]}{}{\vspace{1pt}
+\item{\cventry{2022-Present}{Senior Software Engineer}{Prima Assicurazioni}{Remote}{}{\vspace{1pt}
 \begin{itemize}
-    \item {[Achievement or responsibility 1 - be specific, use numbers where possible]}
-    \item {[Achievement or responsibility 2]}
-    \item {[Achievement or responsibility 3]}
-    \item {[Achievement or responsibility 4]}
+    \setlength{\itemsep}{3pt}
+    \item {Led development of a \tech{Rust} installment scheduler (\tech{Tokio}, \tech{Apalis}, \tech{Postgres}, \tech{hexagonal architecture}) letting customers split policy payments into monthly rates}
+    \item {Led extraction of the Policy Management domain into a dedicated \tech{Rust} \tech{microservice} (\tech{Tower}, \tech{Tonic}, \tech{Axum}), pioneering internal \tech{gRPC}/\tech{Protobuf} adoption and \tech{Kafka}-based async integrations}
+    \item {Built the customer application funnel for Prima Assicurazioni's end-to-end Spanish product launch using \tech{Elm} and \tech{Next.js}}
+    \item {Spent a full year on Claims-domain 3rd-party integrations with \tech{Elixir} and \tech{Phoenix} (\tech{CQRS} \& \tech{Event Sourcing})}
+    \item {Rebuilt a distributed email ingestion engine (\tech{Rust}, \tech{Postgres}, \tech{RabbitMQ}) with high-resolution observability via \tech{Datadog}}
 \end{itemize}}}
 
-\vspace{3pt}
+\vspace{5pt}
 
-% --- Previous Role ---
-\item{\cventry{[YYYY-YYYY]}{[Job Title]}{[Company]}{[City, Country]}{}{\vspace{1pt}
+% ---Previous Role ---
+\item{\cventry{2021-2022}{Full Stack Developer}{TalentBait}{Remote, Barcelona}{}{\vspace{1pt}
 \begin{itemize}
-    \item {[Achievement or responsibility 1]}
-    \item {[Achievement or responsibility 2]}
-    \item {[Achievement or responsibility 3]}
+    \setlength{\itemsep}{3pt}
+    \item {Led the transition from a legacy monolith to a \tech{microservices} architecture using \tech{Node.js} and \tech{Firebase}, with monitoring via \tech{Datadog}}
+    \item {Owned critical 3rd-party API integrations with a focus on resilience and security}
 \end{itemize}}}
 
-\vspace{3pt}
+\vspace{5pt}
 
-% --- Earlier Role ---
-\item{\cventry{[YYYY-YYYY]}{[Job Title]}{[Company]}{[City, Country]}{}{\vspace{1pt}
+% ---Earlier Role ---
+\item{\cventry{2020-2021}{Backend Engineer}{Security Union}{Remote}{}{\vspace{1pt}
 \begin{itemize}
-    \item {[Achievement or responsibility 1]}
-    \item {[Achievement or responsibility 2]}
+    \item {Designed the distributed backend (\tech{Rust}, \tech{TypeScript}, \tech{Redis}, \tech{RabbitMQ}, \tech{Postgres}) for Armore App, an open source, E2E encrypted location-sharing app with +10k users}
 \end{itemize}}}
+
+\vspace{5pt}
+
+% ---Earlier Role ---
+\item{\cventry{Mar 2021 - Aug 2021}{Fullstack Developer}{Solve The X}{Barcelona, Spain}{}{\vspace{1pt}
+\begin{itemize}
+    \item {Migrated legacy REST APIs (\tech{PHP}/\tech{MySQL}) to \tech{GraphQL} backed by \tech{Postgres}}
+\end{itemize}}}
+
+\end{itemize}
+
+% ============================================================
+%     INDEPENDENT PROJECTS
+% ============================================================
+
+\section{Independent Projects}
+\vspace{1pt}
+\begin{itemize}
+
+\item{\cventry{2024-2025}{Collaboration with Arca's founders}{Arca -- Smart Locker System (\href{https://arca.bot/}{\underline{arca.bot}})}{}{}{\vspace{1pt}
+Built Arca's firmware entirely with the \tech{Nerves} framework, synchronizing hardware and server state and controlling every locker action (locking, lights, doors, motion-based alarm). Built the companion web app with \tech{Ash}/\tech{Phoenix}/\tech{LiveView} and shipped on-the-fly updates with \tech{NervesCloud} as an early Beta adopter.
+}}
 
 \end{itemize}
 
@@ -134,57 +265,13 @@
 \section{Education}
 \vspace{1pt}
 \begin{itemize}
-
-\item{\cventry{[YYYY-YYYY]}{[Degree] in [Field]}{[Institution]}{[City, Country]}{}{\vspace{1pt}
-Thesis: ``[Thesis Title].'' [Brief description of research focus.]
-}}
-
-\vspace{3pt}
-
-\item{\cventry{[YYYY-YYYY]}{[Degree] in [Field]}{[Institution]}{[City, Country]}{}{\vspace{1pt}
-[Brief description or key topics.]
-}}
-
+\item{\cventry{2020-2021}{Bootcamp in Software Engineering (Backend)}{Assembler Institute of Technology}{Barcelona, Spain}{}{}}
+\item{\cventry{2018-2020}{Bachelor's in Computer Science (uncompleted, 2 of 4 years)}{Universitat de Lleida}{Lleida, Spain}{}{}}
 \end{itemize}
 
-% ============================================================
-%     LANGUAGES
-% ============================================================
-
-\section{Languages}
-\vspace{1pt}
-\begin{itemize}
-\item {[Language 1] (native), [Language 2] (fluent), [Language 3] (intermediate).}
-\end{itemize}
-
-% ============================================================
-%     PUBLICATIONS (optional)
-% ============================================================
-
-\section{Publications}
-\vspace{1pt}
-\begin{itemize}
-\item {[Author(s)] ([Year]). [Title]. [Journal/Conference]. \href{[DOI_URL]}{DOI link}}
-\end{itemize}
-
-% ============================================================
-%     HONORS AND AWARDS (optional)
-% ============================================================
-
-\section{Honors and Awards}
-\vspace{1pt}
-\begin{itemize}
-\item{\textbf{[Award Name]} -- [Event/Organization] ([Year]).}
-\end{itemize}
-
-% ============================================================
-%     REFERENCES
-% ============================================================
-
-\section{References}
-\vspace{1pt}
-\begin{itemize}
-\item{Available upon request.}
-\end{itemize}
+% Languages moved into the header band (see \cvlanguages / \makehead above).
+% Certifications, Publications, Honors/Awards, and References all omitted
+% from this single-page cut for space; see 01-candidate-profile.md for the
+% full record and git history for the 2-page version with these sections.
 
 \end{document}

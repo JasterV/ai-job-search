@@ -59,7 +59,7 @@ Expected output: `Output written on main_<company>_<role>.pdf (2 pages, ...)`. A
     linkcolor=blue,
     filecolor=magenta,
     urlcolor=blue,
-    pdftitle={[YOUR_NAME] - CV},
+    pdftitle={Alex Morgan - CV},
     % Keep pdfpagemode=UseNone: this block runs after moderncv's own
     % \AtEndPreamble (moderncv.cls sets pdfpagemode there), so a FullScreen
     % value here would win and open every CV in fullscreen presentation mode.
@@ -69,13 +69,13 @@ Expected output: `Output written on main_<company>_<role>.pdf (2 pages, ...)`. A
 \usepackage{import}
 
 % Personal data
-\name{[FIRST_NAME]}{[LAST_NAME]}
+\name{Alex}{Morgan}
 % If you have no address to list, DELETE this whole line. \address{}{}{} fails
 % with "There's no line here to end" on every moderncv version.
-\address{[YOUR_ADDRESS]}{}{}
-\phone[mobile]{[YOUR_PHONE]}
-\email{[YOUR_EMAIL]}
-\extrainfo{\href{[YOUR_LINKEDIN_URL]}{LinkedIn}, \href{[YOUR_GITHUB_URL]}{GitHub}}
+\address{Palermo, Italy}{}{}
+\phone[mobile]{+1 555-0100}
+\email{alex.morgan@example.com}
+\extrainfo{\href{https://linkedin.com/in/jaster-victor}{LinkedIn}, \href{https://github.com/JasterV}{GitHub}}
 
 \begin{document}
 \makecvtitle
@@ -137,11 +137,11 @@ When the role sits outside your home domain, **lead with the domain-transfer arg
 **Create 2-3 profile statement templates for your main role types:**
 
 <!-- SETUP: These are populated based on your background -->
-**For [YOUR_PRIMARY_ROLE_TYPE] roles:**
-> [YOUR_PROFILE_STATEMENT_TEMPLATE_1]
+**For Backend/Distributed Systems (Rust/Elixir) roles:**
+> Senior Software Engineer with 5+ years building production backend systems in Rust and Elixir, specializing in extracting legacy monoliths into resilient microservices. Deep experience with async Rust (Tokio), gRPC/Protobuf API design, and Elixir's OTP/BEAM for CQRS and event-sourced domains. Has led end-to-end ownership of architecture decisions, from hexagonal-architecture service design to high-resolution observability with OpenTelemetry.
 
-**For [YOUR_SECONDARY_ROLE_TYPE] roles:**
-> [YOUR_PROFILE_STATEMENT_TEMPLATE_2]
+**For Full-Stack/Product Engineering roles:**
+> Full-stack software engineer with experience spanning Rust, Elixir, TypeScript/Node.js, and Flutter across both backend-heavy and product-facing roles. Has led monolith-to-microservices transitions, built GraphQL APIs on legacy REST systems, and shipped a complete IoT product (firmware to web app) as an independent project. Combines backend depth with the ability to work across the full stack when a role calls for it.
 
 Statements labeled *[Used for: <company>_<role>]* were extracted from archived application drafts by `/setup` Path A. They are **phrasing references, never fact sources**: when drafting from one, every factual claim still comes from `01-candidate-profile.md` - a past tailored draft does not vouch for its own accuracy.
 

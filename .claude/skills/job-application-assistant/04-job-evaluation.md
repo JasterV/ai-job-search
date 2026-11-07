@@ -46,6 +46,18 @@ Judge the level comparison the same way you judge everything else in this framew
 
 **Worked example:** a candidate whose Languages table lists Spanish (Native) and English (B1/B2). A posting requiring "fluent Russian" → **FAIL**, Russian isn't declared at all. A posting requiring "fluent English" → **FLAG**, English is declared but "fluent" plausibly exceeds B1/B2 — score and draft the application, but tell the candidate this posting's bar may be a stretch and let them decide. A posting requiring "conversational English" or unspecified English → **PASS**, B1/B2 clears a "conversational" bar cleanly.
 
+## Company/Industry Deal-breakers Gate — run before scoring
+
+Some business models and industries are an automatic exclusion regardless of technical fit, separate from the Eligibility and Language gates above. Check the posting and company against this list before scoring:
+
+| Dealbreaker | Verdict |
+|---|---|
+| Crypto exchange or crypto trading platform as the company's core product (custody/trading of cryptocurrency, e.g. Kraken, OKX, Binance, Coinbase) | **FAIL — hard stop.** Do not score, do not draft. Business model objection. |
+| Defense, intelligence, or security-clearance-adjacent work | **FAIL — hard stop.** Do not score, do not draft. This is a values objection, not just an Eligibility Gate technicality — it applies even to a role that would not personally require the candidate to hold a clearance (e.g. a non-cleared engineering role at a defense contractor). |
+| Any business relationship with Israel (offices or R&D presence, investors, acquisitions, major customers or partnerships) | **FAIL — hard stop.** Values objection. **Verification limit: this cannot be checked from posting text alone and cannot be guaranteed exhaustive.** `/rank`'s triage agents work from posting text only and will usually have no evidence either way — treat an unflagged `/rank` result as *unchecked*, not cleared. A dedicated web search ("`<Company>` Israel") is mandatory before `/apply` drafts anything, and `/apply`'s Step 1 evaluation must report what was found (or that nothing turned up, which is "not found," never "confirmed clean"). **Staffing/outstaffing postings** (e.g. BairesDev) that don't name the end client: check the staffing company itself, but say explicitly that the undisclosed client could not be verified, and flag this to the user before drafting rather than silently proceeding. |
+
+This list grows as new objections surface; add entries here rather than relying on memory of a one-off conversation.
+
 ## Scoring Dimensions
 
 Evaluate each job posting against these five dimensions:
@@ -60,9 +72,9 @@ How well do the required/preferred skills align with the candidate's capabilitie
 | 40-59 | Partial match, significant upskilling needed |
 | 0-39 | Fundamental mismatch |
 
-**Strong match areas:** [YOUR_PRIMARY_SKILLS]
-**Moderate match areas:** [YOUR_SECONDARY_SKILLS]
-**Weak match areas:** [SKILLS_YOU_LACK]
+**Strong match areas:** Rust (async web development with the Tokio ecosystem - Tokio, Tower, Tonic, Axum; gRPC/Protobuf; hexagonal architecture), Elixir/OTP (Phoenix, LiveView, Ash, Nerves), distributed systems and microservices extraction, event-driven architecture, observability (Datadog, Sentry)
+**Moderate match areas:** TypeScript/Node.js, GraphQL, Kafka, RabbitMQ, Postgres, Kubernetes, AWS, Flutter/Dart, Elm (frontend), embedded/IoT firmware
+**Weak match areas:** Deep ML/data science, frontend-heavy roles, ecosystems outside Rust/BEAM/TypeScript (e.g. Java, C#, Python-primary stacks), formal people-management (no direct reports to date)
 
 ### 2. Experience Match (0-100)
 Does work history align with what they're looking for? Match on the function and nature of the work performed, not the literal job title - a "Data Consultant" and a "Data Scientist" role can be functionally identical.
@@ -74,9 +86,9 @@ Does work history align with what they're looking for? Match on the function and
 | 40-59 | Adjacent experience, would need to make the case |
 | 0-39 | Unrelated experience |
 
-**Strong:** [YOUR_DIRECT_EXPERIENCE_DOMAINS]
-**Moderate:** [YOUR_ADJACENT_EXPERIENCE]
-**Entry-level:** [ROLES_WITH_LIMITED_EXPERIENCE]
+**Strong:** Backend/distributed systems engineering, microservices extraction from monoliths, production Rust and Elixir systems
+**Moderate:** Full-stack/product engineering (TalentBait, Solve The X), embedded/IoT firmware (Arca side project)
+**Entry-level:** Formal engineering management roles with direct reports (growth area: has led projects and technical direction, not yet formal management)
 
 ### 3. Behavioral/Culture Fit (0-100)
 Does the role and company culture match the behavioral profile?
@@ -107,19 +119,20 @@ Does this role advance career goals and contain tasks that energize?
 | 0-39 | Dead end or backwards step |
 
 **Career goals:**
-- [YOUR_CAREER_GOAL_1]
-- [YOUR_CAREER_GOAL_2]
-- [YOUR_CAREER_GOAL_3]
+- Own architecture decisions on backend/distributed systems work (domain extractions, hexagonal architecture, state machines)
+- Grow into technical leadership and mentoring
+- Deepen Rust systems work, especially async runtimes (Tokio)
+- Stay close to the BEAM/Elixir ecosystem (OTP, Phoenix/LiveView), including embedded/IoT work
 
 **Motivation filter:** Evaluate not just whether you *can* do the tasks, but whether the tasks will *energize* you. Consider:
-- Tasks that energize: [YOUR_ENERGIZING_TASKS]
-- Tasks that drain: [YOUR_DRAINING_TASKS]
+- Tasks that energize: Architecture-level decisions, Rust/Tokio systems work, Elixir/OTP work, mentoring, greenfield or domain-extraction projects
+- Tasks that drain: Pure legacy maintenance with no modernization path
 - Non-task factors: leadership style, department culture, company values, degree of autonomy
 
 **Life situation alignment:** Consider personal constraints:
-- **Security**: [YOUR_FINANCIAL_SITUATION_CONTEXT]
-- **Flexibility**: [YOUR_SCHEDULE_CONSTRAINTS]
-- **Professional development**: [YOUR_GROWTH_PRIORITIES]
+- **Security**: Salary baseline of EUR 45,000/year (gross) - used as a floor when benchmarking offers
+- **Flexibility**: Remote only, not open to relocation
+- **Professional development**: Prioritizes growing into technical leadership/mentoring while deepening Rust (Tokio/async) and Elixir/BEAM expertise
 
 ### 6. Salary Benchmark (Optional)
 

@@ -13,13 +13,13 @@ The `site:` query templates in this file are the **WebSearch fallback** — for 
 ## Search Sites
 
 Primary (your market's job boards - scaffold one with `/add-portal`):
-- **[YOUR_JOB_BOARD]** - your market's largest general job board
-- **linkedin.com/jobs** - LinkedIn job listings (filter: [YOUR_COUNTRY] / [YOUR_CITY]); also covered by `linkedin-search` CLI
-- **[YOUR_INDUSTRY_JOB_BOARD]** - a niche/industry board for your field (optional)
-- **[YOUR_ADDITIONAL_JOB_BOARD]** - another major board for your market (optional)
+- **linkedin.com/jobs** - LinkedIn job listings (remote / Italy / EU-wide); also covered by `linkedin-search` CLI
+- **freehire.com** - also covered by `freehire-search` CLI
+- **elixirjobs.net** - niche Elixir job board; also covered by the `elixirjobs-search` CLI (`.agents/skills/elixirjobs-search/`)
+- **rustjobs.dev** - niche Rust job board (not yet wired as a CLI skill - run `/add-portal` to scaffold it; until then, used via WebSearch `site:` queries below)
 
 Secondary (company career pages via Google):
-- Direct Google searches with `site:` filters for known target companies
+- No specific target companies identified yet - rely on title/skill-based queries below
 
 ## Query Categories
 
@@ -27,54 +27,122 @@ Queries are grouped by priority. Write **each category in every language from yo
 
 **Organize by function, not job title.** The same underlying work carries different titles across companies and markets (a "Data Scientist" role at one employer may be posted as "Insights Analyst" or "Data Consultant" at another). Name each priority category after the function it covers, and list several plausible job titles as query variants within that category rather than betting an entire priority tier on one exact title string.
 
-### Priority 1: [YOUR_PRIMARY_ROLE_TYPE]
+### Priority 1: Backend / Distributed Systems Engineering (Rust & Elixir)
 
 These match your strongest and most desired career direction.
 
+English:
 ```
-site:[YOUR_JOB_BOARD] "[YOUR_PRIMARY_JOB_TITLE_1]" [YOUR_CITY]
-site:[YOUR_JOB_BOARD] "[YOUR_PRIMARY_JOB_TITLE_2]" [YOUR_CITY]
-site:[YOUR_JOB_BOARD] "[YOUR_KEY_SKILL]" [YOUR_CITY]
-site:linkedin.com/jobs "[YOUR_PRIMARY_JOB_TITLE_1]" [YOUR_COUNTRY]
-```
-
-### Priority 2: [YOUR_DOMAIN_EXPERTISE]
-
-These match your domain expertise.
-
-```
-site:[YOUR_JOB_BOARD] [YOUR_DOMAIN_KEYWORD_1] [YOUR_CITY] OR [YOUR_REGION]
-site:[YOUR_JOB_BOARD] [YOUR_DOMAIN_KEYWORD_2] [YOUR_COUNTRY]
-site:linkedin.com/jobs [YOUR_DOMAIN_KEYWORD_1] [YOUR_CITY] [YOUR_COUNTRY]
+site:linkedin.com/jobs "Senior Backend Engineer" Rust Remote
+site:linkedin.com/jobs "Senior Software Engineer" Elixir Remote
+site:linkedin.com/jobs "Rust Engineer" Remote
+site:linkedin.com/jobs "Elixir Engineer" Remote
+"Rust developer" Tokio remote job
+"Elixir developer" OTP remote job
 ```
 
-### Priority 3: [YOUR_ADJACENT_ROLE_TYPE]
-
-Adjacent roles you could pivot into.
-
+Spanish:
 ```
-site:[YOUR_JOB_BOARD] "[YOUR_ADJACENT_TITLE_1]" [YOUR_KEY_SKILL] [YOUR_CITY]
-site:[YOUR_JOB_BOARD] "[YOUR_ADJACENT_TITLE_2]" [YOUR_KEY_SKILL] [YOUR_CITY]
+"Ingeniero de Backend Senior" Rust remoto
+"Desarrollador Rust" remoto
+"Desarrollador Elixir" remoto
+```
+
+Catalan:
+```
+"Enginyer de Backend Senior" Rust remot
+"Desenvolupador Rust" remot
+```
+
+Italian:
+```
+"Ingegnere Backend Senior" Rust remoto
+"Sviluppatore Rust" remoto
+"Sviluppatore Elixir" remoto
+```
+
+### Priority 2: Full-Stack / Product Engineering
+
+These match your secondary career direction.
+
+English:
+```
+site:linkedin.com/jobs "Full Stack Engineer" Remote
+site:linkedin.com/jobs "Full Stack Developer" TypeScript Remote
+```
+
+Spanish:
+```
+"Desarrollador Full Stack" remoto
+```
+
+Catalan:
+```
+"Desenvolupador Full Stack" remot
+```
+
+Italian:
+```
+"Sviluppatore Full Stack" remoto
+```
+
+### Priority 3: Broader Experience Levels & Adjacent Roles
+
+Given current market conditions, also search junior-level and staff/platform-level roles, not just senior.
+
+English:
+```
+site:linkedin.com/jobs "Junior Software Engineer" Rust OR Elixir Remote
+site:linkedin.com/jobs "Staff Software Engineer" Rust OR Elixir Remote
+site:linkedin.com/jobs "Platform Engineer" Remote
+```
+
+Spanish:
+```
+"Ingeniero de Software Junior" remoto
+```
+
+Catalan:
+```
+"Enginyer de Software Junior" remot
+```
+
+Italian:
+```
+"Ingegnere Software Junior" remoto
 ```
 
 ### Priority 4: Broader Technical / Consulting
 
 Wider net for general technical roles.
 
+English:
 ```
-site:[YOUR_JOB_BOARD] [YOUR_KEY_SKILL] developer [YOUR_CITY]
-site:linkedin.com/jobs "[YOUR_KEY_SKILL] developer" [YOUR_CITY]
-site:[YOUR_JOB_BOARD] "technical consultant" [YOUR_DOMAIN] [YOUR_CITY]
+site:linkedin.com/jobs "Backend Developer" Remote
+"microservices" "distributed systems" developer remote job
+```
+
+Spanish:
+```
+"Desarrollador Backend" remoto
+```
+
+Catalan:
+```
+"Desenvolupador Backend" remot
+```
+
+Italian:
+```
+"Sviluppatore Backend" remoto
 ```
 
 ## Location Filter
 
-When evaluating results, verify the job location is within reasonable commute distance from your home. Define acceptable areas:
-- [YOUR_CITY] and surrounding areas
-- [ACCEPTABLE_AREA_1]
-- [ACCEPTABLE_AREA_2]
-- [BORDERLINE_AREA] (borderline - ~X min by transit)
-- [TOO_FAR_AREA] (too far)
+Remote-only - not open to relocation (see Deal-breakers in CLAUDE.md). When evaluating results:
+- Fully remote (any country) - PASS
+- Hybrid with occasional travel to Palermo, Italy - borderline, discuss with user
+- On-site only, or requires relocation - FAIL (deal-breaker)
 
 ## Language Filter
 

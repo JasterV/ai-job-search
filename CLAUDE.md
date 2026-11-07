@@ -1,10 +1,10 @@
-# Job Application Assistant for [YOUR_NAME]
+# Job Application Assistant for Alex Morgan
 
 <!-- SETUP: This file is populated by running /setup -->
 <!-- After running /setup, all [PLACEHOLDER] tokens will be replaced with your actual information -->
 
 ## Role
-This repo is a job application workspace. Claude acts as a career advisor and application assistant for [YOUR_NAME], helping with:
+This repo is a job application workspace. Claude acts as a career advisor and application assistant for Alex Morgan, helping with:
 1. **Job fit evaluation** - Assess job postings against your profile (skills, experience, behavioral traits)
 2. **CV tailoring** - Adapt existing CV templates (LaTeX/moderncv) to target specific roles
 3. **Cover letter writing** - Draft targeted cover letters using existing templates (LaTeX)
@@ -16,76 +16,96 @@ This repo is a job application workspace. Claude acts as a career advisor and ap
 <!-- This section is auto-populated by /setup. You can also fill it in manually. -->
 
 ### Identity
-- **Name:** [YOUR_NAME]
-- **Location:** [YOUR_CITY], [YOUR_COUNTRY] ([YOUR_COMMUTE_CONSTRAINTS])
+- **Name:** Alex Morgan
+- **Nationality:** Spanish
+- **Location:** Palermo, Italy (Remote only - not open to relocation)
+- **Work arrangement:** Open to freelance/B2B contracts in addition to standard employee contracts, including invoicing a Spanish company while tax-resident in Italy - confirmed compliant with his accountant. Willing to self-fund any required travel to Spain.
 - **Languages:**
   | Language | Level |
   |----------|-------|
-  | [LANGUAGE] | [LEVEL] |
+  | Spanish | Native |
+  | Catalan | Native |
+  | English | Native |
+  | Italian | Fluent |
   <!-- Every language you work in professionally, with your level (CEFR, "native," "professional
   working proficiency," whatever your CV/LinkedIn use - no need to force it into one scale). An
   undeclared language is a hard deal-breaker if a posting requires it; a declared language at a
   lower level than a posting wants is flagged for your own judgment, not auto-rejected. See
   04-job-evaluation.md's Language Gate. -->
-- **CV language:** [YOUR_CV_LANGUAGE] <!-- English unless your market expects otherwise; /setup asks -->
+- **CV language:** English <!-- English unless your market expects otherwise; /setup asks -->
 
-- **Status:** [YOUR_EMPLOYMENT_STATUS]
-- **LinkedIn headline:** "[YOUR_LINKEDIN_HEADLINE]"
+- **Status:** Employed (Senior Software Engineer at Prima Assicurazioni)
+- **LinkedIn headline:** "Software Engineer @ Prima | Elixir & Rust developer"
 
 ### Education
 <!-- List your degrees, most recent first -->
-- **[DEGREE_LEVEL] in [FIELD]** ([YEAR_START]-[YEAR_END]) - [INSTITUTION]
-  - Thesis: "[THESIS_TITLE]"
-  - Topics: [KEY_TOPICS]
+- **Bootcamp in Software Engineering (Backend)** (Jun 2020-Feb 2021) - Assembler Institute of Technology
+  - Topics: Specialized in back-end development, 20+ real-world problems using current technologies
+- **Bachelor's in Computer Science (uncompleted, 2 of 4 years)** (Sep 2018-May 2020) - Universitat de Lleida
+  - Topics: Data Structures, Algorithms, Mathematics (completed with certification of honor)
 
 ### Professional Experience
 <!-- List your roles, most recent first -->
-- **[JOB_TITLE]** ([START_DATE] - [END_DATE]) - **[COMPANY]** ([LOCATION])
-  - [KEY_RESPONSIBILITY_1]
-  - [KEY_RESPONSIBILITY_2]
-  - [KEY_ACHIEVEMENT]
+- **Senior Software Engineer** (Jun 2022 - Current) - **Prima Assicurazioni** (Remote)
+  - Led the development of a Rust-based installment scheduler backend (Apalis, Postgres, hexagonal architecture) letting customers split policy payments into monthly rates
+  - Led the extraction of the Policy Management domain from a legacy monolith into a dedicated Rust microservice, and pioneered internal gRPC adoption
+  - Led the rebuild of a distributed email ingestion engine (Rust/Postgres/RabbitMQ) with high-resolution Datadog observability
+- **Full Stack Developer** (Sep 2021 - Jun 2022) - **TalentBait** (Remote, based in Barcelona)
+  - Led the transition from a legacy monolith to a microservices architecture (Node.js/Firebase)
+  - Introduced Datadog monitoring and integration testing for web APIs
+- **Backend Engineer** (Nov 2020 - Sep 2021) - **Security Union** (Remote)
+  - Built the distributed backend (Rust/TypeScript/Redis/RabbitMQ/Postgres) for Armore App, an open source, E2E encrypted location-sharing app with +10k users
+- **Fullstack Developer** (Mar 2021 - Aug 2021) - **Solve The X** (Barcelona, Spain)
+  - Migrated legacy PHP/MySQL REST APIs to GraphQL backed by Postgres
 
 ### Technical Skills
-- **Primary:** [YOUR_PRIMARY_SKILLS]
-- **Secondary:** [YOUR_SECONDARY_SKILLS]
-- **Domain:** [YOUR_DOMAIN_EXPERTISE]
-- **Software:** [YOUR_TOOLS_AND_SOFTWARE]
+- **Primary:** Rust (async web development with the Tokio ecosystem - Tokio, Tower, Tonic, Axum; gRPC/Protobuf; hexagonal architecture), Elixir (OTP, Phoenix, LiveView, Ash, Nerves), TypeScript/Node.js
+- **Secondary:** GraphQL, Kafka, RabbitMQ, Postgres, Kubernetes, AWS, Flutter/Dart, Elm (frontend)
+- **Domain:** Distributed systems & microservices extraction, event-driven architecture, observability, embedded/IoT firmware (BEAM/Nerves), cloud infrastructure (Kubernetes, AWS)
+- **Software:** Datadog, Sentry, GitHub Actions, Docker
 
 ### Certifications
 <!-- List relevant certifications with dates -->
-- **[CERTIFICATION_NAME]** - [HOURS]h - completed [DATE]
+- **Dart and Flutter: The Complete Developer's Guide**
+- **Elixir and Phoenix: Real World Functional Programming**
+- **The Ultimate JavaScript Mastery Series**
+- **Python (Basic) Certificate**
 
 ### Publications
 <!-- List peer-reviewed publications, if any -->
-- [AUTHOR_LIST] ([YEAR]). [TITLE]. [JOURNAL].
+- None currently.
 
 ### Awards
 <!-- List relevant awards, hackathons, competitions -->
-- [AWARD_NAME] - [EVENT] ([YEAR])
+- None currently.
 
 ### Behavioral Profile
 <!-- Your behavioral assessment results (PI, DISC, Myers-Briggs, or self-assessment) -->
-- **[TRAIT_1]** - [DESCRIPTION]
-- **[TRAIT_2]** - [DESCRIPTION]
-- **Strengths:** [YOUR_STRENGTHS]
-- **Growth areas:** [YOUR_GROWTH_AREAS]
-- **Thrives in:** [YOUR_IDEAL_ENVIRONMENT]
+No formal assessment on file; see `02-behavioral-profile.md` for details, including one inference from LinkedIn.
+- **Strengths:** Leading architecture-level migrations (domain extractions, monolith-to-microservices), hands-on ownership from design through delivery
+- **Growth areas:** Not yet assessed - no formal behavioral assessment on file
+- **Thrives in:** Remote-first teams with ownership over architecture decisions, close to the Rust/BEAM ecosystem
 
 ### What Excites You
 <!-- What motivates you professionally -->
-- [PASSION_1]
-- [PASSION_2]
+- Owning architecture decisions on backend/distributed systems (domain extractions, hexagonal architecture, state machines)
+- Rust systems work with async runtimes, especially Tokio
+- Staying close to the BEAM/Elixir ecosystem (OTP, Phoenix/LiveView), including embedded/IoT work via Nerves
+- Growing into technical leadership and mentoring
 
 ### Target Sectors
 <!-- Industries and companies you're targeting -->
-- [SECTOR_1]: [EXAMPLE_COMPANIES]
-- [SECTOR_2]: [EXAMPLE_COMPANIES]
+- Backend/distributed systems engineering (Rust/Elixir): no specific target companies yet
+- Full-stack/product engineering: no specific target companies yet
 
 ### Deal-breakers
 <!-- Hard constraints on job search. Language requirements are handled separately and
 automatically from your Languages table above - don't duplicate them here. -->
-- [DEALBREAKER_1]
-- [DEALBREAKER_2]
+- No relocation / on-site-only roles - remote only
+- No pure legacy-maintenance roles - looking for modernization/architecture-ownership work
+- No crypto exchanges / crypto trading platforms (business model objection, e.g. Kraken, OKX, Binance, Coinbase)
+- No defense/intelligence/security-clearance work (values objection - applies even to roles that wouldn't require the candidate personally to hold a clearance)
+- No company with any business relationship with Israel (offices/R&D presence, investors, acquisitions, major customers or partnerships) - values objection, checked via dedicated web search before applying, not just posting text. Caveat: this cannot be guaranteed exhaustive - some relationships aren't publicly discoverable. For staffing/outstaffing postings (e.g. BairesDev) that don't name the end client, the staffing company itself is checked, but the undisclosed client cannot be verified until named.
 
 ## Repo Structure
 - `cv/` - LaTeX CV variants (moderncv template, banking style)
