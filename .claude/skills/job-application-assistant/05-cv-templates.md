@@ -24,6 +24,8 @@ Expected output: `Output written on main_<company>_<role>.pdf (2 pages, ...)`. A
 
 ## Document Structure
 
+**Contact placeholder note:** the `\name{Alex}{Morgan}`, `\phone[mobile]{+1 555-0100}`, `\email{alex.morgan@example.com}` and `pdftitle={Alex Morgan - CV}` values below are the public-repo placeholder. When drafting an actual tailored CV (`cv/main_<company>_<role>.tex` — never `cv/main_example.tex`), read `CLAUDE.local.md` (gitignored, repo root) if it exists and substitute its real Name/Phone/Email for every one of these occurrences. If `CLAUDE.local.md` is absent, keep the placeholder values unchanged.
+
 ```latex
 \documentclass[11pt,a4paper,sans]{moderncv}
 \moderncvstyle{banking}

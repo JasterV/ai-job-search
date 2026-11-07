@@ -213,6 +213,9 @@ REQUIRED_IGNORE_RULES = [
     "company_research/*.json",
     # Machine-local Claude Code user configuration and ad-hoc permissions approvals.
     ".claude/settings.local.json",
+    # Real contact identity (/apply et al. substitute it for the public
+    # placeholder name/phone/email when drafting actual documents).
+    "CLAUDE.local.md",
 ]
 
 # Negation (re-include) rules the template legitimately ships. .gitignore is

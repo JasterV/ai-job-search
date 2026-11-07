@@ -1,3 +1,8 @@
+# Real contact identity, loaded by /apply et al. to replace the public
+# placeholder ("Alex Morgan") when drafting actual submittable documents.
+# See the note in CLAUDE.md's Identity section.
+CLAUDE.local.md
+
 # Dependencies
 node_modules
 bun.lock

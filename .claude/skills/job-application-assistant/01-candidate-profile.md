@@ -8,6 +8,14 @@ framework_version: 1.1.1
 <!-- After running /setup, all sections will be filled with your actual information -->
 
 ## Identity
+<!-- "Alex Morgan" / +1 555-0100 / alex.morgan@example.com are public-repo
+placeholders. When drafting an actual submittable CV, cover letter, or
+application-form artifact (never cv/main_example.* or cover_letters/cover_example.*),
+read CLAUDE.local.md (gitignored, repo root) if it exists and substitute its real
+Name/Phone/Email for every placeholder occurrence (\name{}{}, \phone[mobile]{},
+\email{}, pdftitle={...}, \namesection{}{...}{...}, \signature{}). If
+CLAUDE.local.md is absent, fall back to the placeholders below unchanged - never
+invent contact details. -->
 - **Name:** Alex Morgan
 - **Nationality:** Spanish
 - **Location:** Palermo, Italy

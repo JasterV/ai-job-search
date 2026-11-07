@@ -16,6 +16,10 @@ This repo is a job application workspace. Claude acts as a career advisor and ap
 <!-- This section is auto-populated by /setup. You can also fill it in manually. -->
 
 ### Identity
+<!-- "Alex Morgan" below is a public-repo placeholder. When drafting an actual
+submittable CV, cover letter, or application-form artifact (never cv/main_example.*
+or cover_letters/cover_example.*), read CLAUDE.local.md (gitignored) if it exists
+and substitute its real Name/Phone/Email for every placeholder occurrence. -->
 - **Name:** Alex Morgan
 - **Nationality:** Spanish
 - **Location:** Palermo, Italy (Remote only - not open to relocation)

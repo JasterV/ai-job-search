@@ -57,6 +57,8 @@ The font wrapper is mandatory — if you just move `\begin{itemize}` outside `\l
 
 ## Document Structure
 
+**Contact placeholder note:** the `\namesection{}{\Huge{Alex Morgan}}{...alex.morgan@example.com...+1 555-0100...}` and `\signature{Alex Morgan}` values below are the public-repo placeholder. When drafting an actual tailored cover letter (`cover_letters/cover_<company>_<role>.tex` — never `cover_letters/cover_example.tex`), read `CLAUDE.local.md` (gitignored, repo root) if it exists and substitute its real Name/Phone/Email for every one of these occurrences. If `CLAUDE.local.md` is absent, keep the placeholder values unchanged.
+
 ```latex
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Cover Letter - [Company], [Role]
