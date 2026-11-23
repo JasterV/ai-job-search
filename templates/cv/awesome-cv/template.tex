@@ -1,0 +1,280 @@
+%!TEX TS-program = lualatex
+%!TEX encoding = UTF-8 Unicode
+%% Awesome-CV template skeleton (single page)
+%% Registered via /add-template. Upstream: https://github.com/posquit0/Awesome-CV
+%%
+%% Compile from this file's output directory (see TEMPLATE.md for the exact
+%% command) - it sets TEXINPUTS and OSFONTDIR so awesome-cv.cls and the
+%% bundled fonts/ in this template folder are found without copying them
+%% into every tailored CV's output directory.
+
+\documentclass[11pt, a4paper]{awesome-cv}
+
+% Tuned for a single-page CV. Loosen top/bottom if content needs more room,
+% or tighten further if a tailored CV is a few lines over one page.
+% No footer is used, so the bottom margin is a plain margin. If \makecvfooter
+% is ever re-enabled, bottom must be clearly larger than footskip (see
+% TEMPLATE.md Known Pitfalls) or the footer is clipped at the page edge.
+\geometry{left=1.1cm, top=1.1cm, right=1.1cm, bottom=1.0cm, footskip=.5cm}
+
+% Custom muted accent (softer than the built-in awesome-* swatches, which are
+% all fully-saturated). \tech{} and the header dots below use this literal
+% name directly, never a \colorlet alias - see the \tech{} note below.
+\definecolor{accentcolor}{HTML}{B3281C}
+\colorlet{awesome}{accentcolor}
+\setbool{acvSectionColorHighlight}{true}
+\renewcommand{\acvHeaderSocialSep}{\quad\textbar\quad}
+
+% Body/footer text defaults to Source Sans 3 via \bodyfont / \bodyfontlight,
+% which drops nearly every interword space from the PDF's text layer under
+% pypdf (confirmed on upstream's own unmodified example - not something this
+% template introduced). Routing body text through Roboto instead - already
+% used for the header via \headerfont, and unaffected by the bug - fixes
+% extraction with no visible change in the two fonts' similarity. See Known
+% Pitfalls in TEMPLATE.md before reintroducing \sffamily/\rmfamily/\normalfont
+% directly anywhere in a tailored CV.
+\renewcommand*{\bodyfont}{\roboto\selectfont}
+\renewcommand*{\bodyfontlight}{\roboto\fontseries{l}\selectfont}
+\renewcommand*{\footerfont}{\roboto\selectfont}
+
+% The class's prose/bullet text (profile statement, experience bullets,
+% project descriptions, skill-pill text) defaults to 9pt with 1em
+% (= 9pt) leading - no extra line-height at all, which reads as cramped at
+% normal reading distance. Bumped to a size and leading that's comfortable
+% without reading as oversized next to the rest of the CV.
+\renewcommand*{\paragraphstyle}{\fontsize{10.5pt}{15pt}\bodyfontlight\upshape\color{text}}
+\renewcommand*{\descriptionstyle}[1]{{\fontsize{10.5pt}{15pt}\bodyfontlight\upshape\color{text} #1}}
+
+% Bigger/more-spaced body text (above) needs more vertical room than the
+% class's default layout budgeted for on a single page - reclaimed below by
+% trimming the gaps between/within sections and entries rather than the
+% type size or leading itself.
+\renewcommand*{\acvSectionTopSkip}{2mm}
+\renewcommand*{\acvSectionContentTopSkip}{1.8mm}
+
+% Role (position) and location were the class's stock 8pt/9pt - noticeably
+% smaller than the 10pt company-name line above them. Bumped to match.
+\renewcommand*{\entrypositionstyle}[1]{{\fontsize{10pt}{1em}\bodyfont\scshape\color{graytext} #1}}
+\renewcommand*{\entrylocationstyle}[1]{{\fontsize{10pt}{1em}\bodyfontlight\slshape\color{awesome} #1}}
+
+\renewcommand*{\cventry}[5]{%
+  \vspace{-2.0mm}
+  \setlength\tabcolsep{0pt}
+  \setlength{\extrarowheight}{0pt}
+  \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} L{\textwidth - 4.5cm} R{4.5cm}}
+    \ifempty{#2#3}
+      {\entrypositionstyle{#1} & \entrydatestyle{#4} \\}
+      {\entrytitlestyle{#2} & \entrylocationstyle{#3} \\
+      \entrypositionstyle{#1} & \entrydatestyle{#4} \\}
+    \ifstrempty{#5}
+      {}
+      {\multicolumn{2}{L{\textwidth}}{\descriptionstyle{#5}} \\}
+  \end{tabular*}%
+}
+\renewenvironment{cvitems}{%
+  \vspace{-4.8mm}
+  \begin{justify}
+  \begin{itemize}[leftmargin=2ex, nosep, noitemsep]
+    \setlength{\parskip}{0pt}
+    \renewcommand{\labelitemi}{\bullet}
+}{%
+  \end{itemize}
+  \end{justify}
+  \vspace{1.0mm}
+}
+
+% Bold + accent-colour emphasis for technology/architecture terms - use this
+% consistently in the profile statement and experience bullets, matching the
+% \tech{} convention from the stock moderncv template. Uses the literal color
+% name, not the \colorlet{awesome}{...} alias - \textcolor with that alias,
+% nested inside already-colored body text, leaks the literal word "awesome"
+% into the PDF's text layer (confirmed via pdftotext). Kerning=Off is required
+% here - Roboto Bold's kerning pairs (e.g. "To") otherwise get exported as a
+% positioning adjustment that pypdf misreads as a mid-word space, and the
+% space immediately after a \tech{} run can vanish the same way ("Tokio
+% runtime" -> "Tokioruntime"). See TEMPLATE.md Known Pitfalls.
+\newcommand{\tech}[1]{{\addfontfeature{Kerning=Off}\textbf{\textcolor{accentcolor}{#1}}}}
+
+% Colored "pill" tag appended after each experience/project bullet to show
+% the technologies it used, instead of naming them inline in the sentence
+% (pale tint of the accent color, rounded corners - matches the pastel pill
+% look from the Awesome-CV comparison mockup). \newtcbox (tcolorbox, already
+% loaded by the class) makes an inline reusable box; "on line" keeps it
+% flowing with text instead of acting like a float.
+\definecolor{pillbg}{HTML}{F4E7E5}
+\newtcbox{\skillpill}{on line, arc=3pt, colback=pillbg, colframe=pillbg,
+  boxrule=0pt, left=5pt, right=5pt, top=2pt, bottom=2pt, boxsep=0pt,
+  fontupper=\color{accentcolor}}
+
+% cvparagraph's opening hook has no \par, so when it directly follows
+% \cvsection{} (as the Profile section does), the section's trailing
+% hrule-fill and the paragraph's first line render on the same physical
+% line instead of the rule reaching the margin and text starting below it.
+% Forcing a \par first fixes this without touching the upstream class file.
+% No trailing \vspace in the closing hook (unlike upstream's 2mm) - this
+% environment is only ever followed by a \cvsection{}, whose own 3mm
+% \acvSectionTopSkip already provides the gap. Adding both made the gap
+% before Professional Experience visibly larger than every other section
+% transition in the document.
+\renewenvironment{cvparagraph}{%
+  \par
+  \vspace{\acvSectionContentTopSkip}
+  \vspace{-3mm}
+  \paragraphstyle
+}{%
+  \par
+}
+
+% The class's \sectionstyle colors only the first 3 characters of a section
+% heading and leaves the rest in plain text color (\StrSplit{...}{3}{...}),
+% e.g. "Pro"fessional Experience - an intentional Awesome-CV design choice
+% (acvSectionColorHighlight), but it reads as a rendering glitch rather than
+% a style. Overridden here to color the whole heading instead.
+\renewcommand*{\sectionstyle}[1]{\color{awesome}\sectionstyleface{#1}}
+
+%-------------------------------------------------------------------------------
+%	CUSTOM CENTERED BANNER HEADER - replaces the stock \makecvheader. Name and
+%	role centered, one contact line (address first), one language line, then
+%	the full-width profile statement (passed as the macro's one argument).
+%	Reuses the class's own \@firstname/\@lastname/... storage, so the
+%	\name{}/\position{}/\address{}/\mobile{}/\email{}/\github{}/\linkedin{}
+%	calls below are unchanged; \extrainfo{} is unused. Each centered line is
+%	wrapped in \mbox so an over-long line shows up as an overfull warning
+%	instead of silently wrapping.
+%-------------------------------------------------------------------------------
+\makeatletter
+
+% Bigger than the class's stock \headersocialstyle (6.8pt)/\headeraddressstyle
+% (8pt) - those read as too small for a contact line carrying this much.
+\newcommand*{\contactlinestyle}[1]{{\fontsize{10pt}{14pt}\headerfont\color{text} #1}}
+
+% Much bigger/bolder than the class's stock \headerpositionstyle (7.6pt,
+% not bold) - the role should read as a clear second line under the name.
+\renewcommand*{\headerpositionstyle}[1]{{\fontsize{16pt}{1.2em}\headerfont\bfseries\color{accentcolor} #1}}
+
+\newcommand{\customcvheader}[1]{%
+  \begin{minipage}{\textwidth}\centering
+    % Keep first/last name in ONE font group: splitting them drops the space
+    % from the PDF text layer in both pypdf and pdftotext (see TEMPLATE.md).
+    % Put a multi-word surname entirely in \name's second argument.
+    {\addfontfeature{Kerning=Off}\fontsize{32pt}{1em}\headerfont\bfseries\color{text} \@firstname\ \@lastname}\\[6pt]
+    \headerpositionstyle{\@position}\\[8pt]
+    \mbox{\contactlinestyle{%
+      \@address
+      \hspace{6pt}\textbar\hspace{6pt}%
+      \href{mailto:\@email}{\faAlt{mailto:\@email}{\faEnvelope}{\@email}}%
+      \hspace{6pt}\textbar\hspace{6pt}%
+      \href{\@teluri}{\faAlt{tel:\@mobile}{\faMobile}{\@mobile}}%
+      \hspace{6pt}\textbar\hspace{6pt}%
+      \href{https://github.com/\@github}{\faAlt{GitHub: @\@github}{\faSquareGithub}{\@github}}%
+      \hspace{6pt}\textbar\hspace{6pt}%
+      \href{https://www.linkedin.com/in/\@linkedin}{\faAlt{LinkedIn: /in/\@linkedin}{\faLinkedin}{\@linkedin}}%
+    }}\\[3pt]
+    \mbox{\contactlinestyle{%
+      \textbf{\color{accentcolor}Native:} [NATIVE_LANGUAGES, e.g. Spanish \textperiodcentered\ Catalan]%
+      \hspace{6pt}\textbar\hspace{6pt}%
+      \textbf{\color{accentcolor}Fluent:} [FLUENT_LANGUAGES]%
+    }}
+  \end{minipage}\par
+  \vspace{10pt}
+  \begin{cvparagraph}#1\end{cvparagraph}%
+  \vspace{2pt}
+}
+\makeatother
+
+%-------------------------------------------------------------------------------
+%	PERSONAL INFORMATION
+%-------------------------------------------------------------------------------
+\name{[FIRST_NAME]}{[LAST_NAME]}
+\position{[TARGET_ROLE_TITLE]}
+\address{[CITY, COUNTRY] (Remote)}
+\mobile{[PHONE]}
+\email{[EMAIL]}
+\github{[GITHUB_USERNAME]}
+\linkedin{[LINKEDIN_USERNAME]}
+% Bare usernames, not full URLs (see Known Pitfalls in TEMPLATE.md).
+
+
+\begin{document}
+
+% No \makecvfooter: this template deliberately has no footer (date/name/page
+% number). The class clears the footer by default, so omitting the call is enough.
+
+%-------------------------------------------------------------------------------
+%	HEADER + PROFILE - the profile statement is the banner macro's argument
+%	(no \cvsection{} heading; it follows the banner directly).
+%-------------------------------------------------------------------------------
+\customcvheader{[PROFILE_STATEMENT_IN_FIRST_PERSON_WITH_\tech{}_HIGHLIGHTS_ON_KEY_TECHNOLOGIES]}
+
+%-------------------------------------------------------------------------------
+%	PROFESSIONAL EXPERIENCE - there is no dedicated Core Competencies
+%	section. Instead, each bullet is a clean outcome sentence with the
+%	technologies it used appended as \skillpill{} tags at the end, e.g.
+%	"Led X. \skillpill{Rust} \skillpill{Postgres}" - keep tech names out of
+%	the sentence itself; the pills carry that signal instead. Separate pills
+%	with a plain space, never \,  - see TEMPLATE.md Known Pitfalls.
+%-------------------------------------------------------------------------------
+\cvsection{Professional Experience}
+\begin{cventries}
+
+  \cventry
+    {[JOB_TITLE]}
+    {[COMPANY_NAME]}
+    {[LOCATION]}
+    {[START_DATE] -- [END_DATE]}
+    {
+      \begin{cvitems}
+        \item {[ACHIEVEMENT_BULLET_SENTENCE]. \skillpill{[SKILL]} \skillpill{[SKILL]}}
+        \item {[ACHIEVEMENT_BULLET_SENTENCE]. \skillpill{[SKILL]} \skillpill{[SKILL]}}
+      \end{cvitems}
+    }
+
+  \cventry
+    {[JOB_TITLE]}
+    {[COMPANY_NAME]}
+    {[LOCATION]}
+    {[START_DATE] -- [END_DATE]}
+    {
+      \begin{cvitems}
+        \item {[ACHIEVEMENT_BULLET_SENTENCE]. \skillpill{[SKILL]}}
+      \end{cvitems}
+    }
+
+\end{cventries}
+
+%-------------------------------------------------------------------------------
+%	INDEPENDENT PROJECTS - delete this \cvsection block if not applicable.
+%	Same bullet-plus-pills convention as Professional Experience above.
+%-------------------------------------------------------------------------------
+\cvsection{Independent Projects}
+\begin{cventries}
+
+  \cventry
+    {[PROJECT_ROLE]}
+    {[PROJECT_NAME] (\href{[PROJECT_URL]}{\underline{[PROJECT_URL_LABEL]}})}
+    {}
+    {[PROJECT_DATE_RANGE]}
+    {
+      \begin{cvitems}
+        \item {[PROJECT_BULLET_SENTENCE]. \skillpill{[SKILL]} \skillpill{[SKILL]}}
+      \end{cvitems}
+    }
+
+\end{cventries}
+
+%-------------------------------------------------------------------------------
+%	EDUCATION
+%-------------------------------------------------------------------------------
+\cvsection{Education}
+\begin{cventries}
+
+  \cventry
+    {[DEGREE_OR_PROGRAM]}
+    {[INSTITUTION]}
+    {[LOCATION]}
+    {[DATE_RANGE]}
+    {}
+
+\end{cventries}
+
+\end{document}

@@ -43,7 +43,7 @@ and substitute its real Name/Phone/Email for every placeholder occurrence. -->
 
 ### Education
 <!-- List your degrees, most recent first -->
-- **Bootcamp in Software Engineering (Backend)** (Jun 2020-Feb 2021) - Assembler Institute of Technology
+- **Bootcamp in Software Engineering (Fullstack)** (Jun 2020-Feb 2021) - Assembler Institute of Technology
   - Topics: Specialized in back-end development, 20+ real-world problems using current technologies
 - **Bachelor's in Computer Science (uncompleted, 2 of 4 years)** (Sep 2018-May 2020) - Universitat de Lleida
   - Topics: Data Structures, Algorithms, Mathematics (completed with certification of honor)
