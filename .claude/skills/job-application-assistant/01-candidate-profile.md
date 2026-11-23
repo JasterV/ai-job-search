@@ -50,10 +50,13 @@ a hard no, not a gap to smooth over. -->
 
 ## Professional Experience
 
-### Senior Software Engineer - Prima Assicurazioni (Jun 2022 - Current)
-Remote
+### Senior Software Engineer - Prima Assicurazioni (Jul 2026 - Current)
+Remote. Hired Jun 2022 as a mid-level Software Engineer and promoted to Senior in Jul 2026 - keep the two titles and date ranges separate on CVs (list Prima once, with two role lines); do not claim the Senior title before Jul 2026.
 - Led the development of an installment scheduler backend enabling customers to split policy payments into monthly rates, built entirely in Rust using Apalis for job scheduling and Postgres as the backend, with a declarative, pure-functional core implemented as a state machine following a hexagonal architecture
   - Incident (STAR candidate): a few months after launch, a customer's payment failed because a third-party payment provider's API was down mid-call, and the error handling didn't account for that specific failure mode, leaving the state machine inconsistent. Traced and manually recovered the correct installment state for that customer; recovery took a few hours. Root cause: the external-dependency failure path wasn't tested as rigorously as the happy path. Follow-up: now treats third-party API failures as a first-class case to design and test for in anything touching money or irreversible state.
+
+### Software Engineer (mid-level) - Prima Assicurazioni (Jun 2022 - Jul 2026)
+Remote. Everything listed below predates the Jul 2026 promotion and was done as a mid-level engineer, not a senior.
 - Led the extraction of the Policy Management domain from a legacy monolith into a dedicated Rust microservice, overseeing CI/CD, gRPC APIs, and cross-domain integrations
 - Pioneered internal gRPC adoption; defined Protobuf APIs, published Rust and Elixir client libraries that other engineering teams integrated against, and implemented services with tracing, reflection, and integration testing
 - Contributed to the extraction of disclosure services using Kafka to manage asynchronous communication with 3rd-party systems
@@ -73,7 +76,7 @@ Remote (based in Barcelona, Spain)
 
 ### Backend Engineer - Security Union (Nov 2020 - Sep 2021)
 Remote
-- Armore App (+10k users, E2E encrypted location sharing app, open source): designed and implemented distributed backend services using Rust, TypeScript, Redis, RabbitMQ & Postgres; built an asynchronous user invitations system critical to the user experience
+- Armore App (+10k users, E2E encrypted location sharing app, open source): implemented the user invitation system between users in under 3 weeks across Android, iOS and the Rust backend. Did NOT design the backend (LinkedIn says "designed and implemented"; the candidate corrected this - do not claim backend design). Stack: Rust, TypeScript, Redis, RabbitMQ & Postgres
 - Remote Shutter (P2P remote-control camera app): built state management for a Flutter app with ReactiveX using an event-driven architecture to communicate across the app's components
 
 ### Fullstack Developer - Solve The X (Mar 2021 - Aug 2021)
@@ -85,7 +88,7 @@ Barcelona, Spain
 
 ## Independent Projects
 <!-- Projects outside of employment: freelance, open source, personal -->
-- **Arca** (2024-2025, https://arca.bot/): Built the firmware for a smart locker system, synchronizing state between the lockers' hardware and the server. The firmware controlled every locker action - locking, unlocking, lights, doors, and a motion-based alarm system - built entirely with the Nerves framework. Built the companion web app with Ash, Phoenix, and LiveView, and worked with NervesCloud on on-the-fly firmware updates as one of its first Beta adopters
+- **Arca** (2024-2025, https://arca.bot/): Collaboration with the founders on a smart locker system. Did NOT build the firmware from scratch: refactored the existing Nerves firmware entirely into a design that is easier to maintain and test, and more efficient by parallelizing more of its internal processes; then implemented the vibration-based alarm system inside it. Built the companion web app with Ash, Phoenix, and LiveView, and worked with NervesCloud on on-the-fly firmware updates as one of its first Beta adopters
 
 ## Technical Skills
 

@@ -49,6 +49,23 @@ If a failed compile needs inspecting, the log is in `cv/build/<file>.log`.
 - **Footer clipped at the page bottom when `bottom` ≤ `footskip`.** The footer baseline sits one `footskip` below the text area, so with `bottom` equal to `footskip` (e.g. both 0.5cm) the baseline lands exactly on the page edge and the footer's lower ~1.7pt falls off the page (measured with `pdftotext -bbox`: footer yMax 843.6pt on an 841.9pt page). Keep `bottom` clearly larger than `footskip` - the CV uses `bottom=1.0cm`, `footskip=.5cm`, which puts the footer ~12pt inside the edge. When tightening margins to fit a page, shrink `top`/left/right or content first and re-check the footer with `pdftotext -bbox`.
 - **Neither bundled font has Unicode geometric shapes** (e.g. U+25CF `●`, U+25CB `○`). Typing them literally compiles without error but silently drops the glyph ("Missing character" in the log, nothing visible) - lualatex doesn't fail loudly on a missing glyph. If a symbol is ever needed, draw it (TikZ) or pick a font that has it, and check the compile log for "Missing character" whenever adding a new symbol/icon.
 
+## Drafting conventions (read before writing a tailored CV)
+
+- **Bullet format:** one clean outcome sentence, then the technologies it used as `\skillpill{}` tags after the period. No technology names in the prose; the pills carry them. Keep pills to single concepts and drop ones the candidate calls not relevant (e.g. Ash, NervesCloud were removed at their request).
+- **Observability bullets** (monitoring, tracing, observability) get an `OpenTelemetry` pill, per the candidate's preference.
+- **Prima Assicurazioni is listed once** with two role lines under it: use `\cventry{<title>}{}{}{<dates>}{...}` with an empty company/location for the second role so the company header is not repeated. Titles and dates come from `01-candidate-profile.md` (mid-level Jun 2022 - Jul 2026, Senior Jul 2026 - present); never claim a title for a period before the promotion.
+- **Accuracy over polish:** when LinkedIn and the candidate disagree, the candidate wins, and the discrepancy is worth flagging (e.g. LinkedIn says Armore backend was "designed and implemented"; the candidate only built the invitation system; LinkedIn lists Italian as "Limited working" while the CV says Fluent). Never write hypothetical or inferred details into bullets.
+- **Page fit:** the CV must be exactly 1 page. Cheapest levers, in order: shorten bullet wording so pills stay on the bullet's last line, drop low-value pills, remove the least relevant bullet or role (Solve The X is the standing candidate to omit), then tighten `\geometry` margins. Do not shrink the 10.5pt body text.
+- **Language line:** `Native:` / `Fluent:` text, not dot ratings (recruiter guidance discourages dots; the candidate chose this after a web review).
+- **Real name and contact details** go only into the untracked `cv/main_<company>_<role>.tex` (read from `CLAUDE.local.md`); never into this template or any tracked file.
+
+### Checks to run after every compile
+
+1. `python3 -c "from pypdf import PdfReader; print(len(PdfReader('cv/<file>.pdf').pages))"` is 1.
+2. Compile log has no `Overfull` for the header (the centered lines are `\mbox`-wrapped, so an overlong line shows up there) and no `Missing character`.
+3. `python3 tools/verify_pdf.py cv/<file>.pdf --dump-text cv/<file>.txt` passes, and the name (including accents) and contact details appear as literal text.
+4. Look at the rendered page: pills wrapping onto an orphan line, and the profile/section spacing.
+
 ## Output file
 
 `cv/main_<company>_<role>.tex`. Do not copy `awesome-cv.cls` or the `fonts/` folder into `cv/` - the compile command above reaches them via `TEXINPUTS`/`OSFONTDIR` relative paths instead, so every tailored CV stays a single file.

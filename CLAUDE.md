@@ -50,15 +50,16 @@ and substitute its real Name/Phone/Email for every placeholder occurrence. -->
 
 ### Professional Experience
 <!-- List your roles, most recent first -->
-- **Senior Software Engineer** (Jun 2022 - Current) - **Prima Assicurazioni** (Remote)
+- **Senior Software Engineer** (Jul 2026 - Current) - **Prima Assicurazioni** (Remote) - promoted from mid-level in Jul 2026
   - Led the development of a Rust-based installment scheduler backend (Apalis, Postgres, hexagonal architecture) letting customers split policy payments into monthly rates
+- **Software Engineer (mid-level)** (Jun 2022 - Jul 2026) - **Prima Assicurazioni** (Remote) - all work below was done at this level
   - Led the extraction of the Policy Management domain from a legacy monolith into a dedicated Rust microservice, and pioneered internal gRPC adoption, publishing Rust and Elixir client libraries that other engineering teams integrated against
   - Led the rebuild of a distributed email ingestion engine (Rust/Postgres/RabbitMQ) with high-resolution Datadog observability
 - **Full Stack Developer** (Sep 2021 - Jun 2022) - **TalentBait** (Remote, based in Barcelona)
   - Led the transition from a legacy monolith to a microservices architecture (Node.js/Firebase)
   - Introduced Datadog monitoring and integration testing for web APIs
 - **Backend Engineer** (Nov 2020 - Sep 2021) - **Security Union** (Remote)
-  - Built the distributed backend (Rust/TypeScript/Redis/RabbitMQ/Postgres) for Armore App, an open source, E2E encrypted location-sharing app with +10k users
+  - Implemented the user invitation system (Android, iOS, Rust backend, under 3 weeks) for Armore App, an open source, E2E encrypted location-sharing app with +10k users - did not design the backend
 - **Fullstack Developer** (Mar 2021 - Aug 2021) - **Solve The X** (Barcelona, Spain)
   - Migrated legacy PHP/MySQL REST APIs to GraphQL backed by Postgres
   - Worked with MongoDB as part of the backend stack
