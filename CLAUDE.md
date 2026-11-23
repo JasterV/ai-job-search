@@ -52,7 +52,7 @@ and substitute its real Name/Phone/Email for every placeholder occurrence. -->
 <!-- List your roles, most recent first -->
 - **Senior Software Engineer** (Jun 2022 - Current) - **Prima Assicurazioni** (Remote)
   - Led the development of a Rust-based installment scheduler backend (Apalis, Postgres, hexagonal architecture) letting customers split policy payments into monthly rates
-  - Led the extraction of the Policy Management domain from a legacy monolith into a dedicated Rust microservice, and pioneered internal gRPC adoption
+  - Led the extraction of the Policy Management domain from a legacy monolith into a dedicated Rust microservice, and pioneered internal gRPC adoption, publishing Rust and Elixir client libraries that other engineering teams integrated against
   - Led the rebuild of a distributed email ingestion engine (Rust/Postgres/RabbitMQ) with high-resolution Datadog observability
 - **Full Stack Developer** (Sep 2021 - Jun 2022) - **TalentBait** (Remote, based in Barcelona)
   - Led the transition from a legacy monolith to a microservices architecture (Node.js/Firebase)
@@ -61,6 +61,7 @@ and substitute its real Name/Phone/Email for every placeholder occurrence. -->
   - Built the distributed backend (Rust/TypeScript/Redis/RabbitMQ/Postgres) for Armore App, an open source, E2E encrypted location-sharing app with +10k users
 - **Fullstack Developer** (Mar 2021 - Aug 2021) - **Solve The X** (Barcelona, Spain)
   - Migrated legacy PHP/MySQL REST APIs to GraphQL backed by Postgres
+  - Worked with MongoDB as part of the backend stack
 
 ### Technical Skills
 - **Primary:** Rust (async web development with the Tokio ecosystem - Tokio, Tower, Tonic, Axum; gRPC/Protobuf; hexagonal architecture), Elixir (OTP, Phoenix, LiveView, Ash, Nerves), TypeScript/Node.js
@@ -108,6 +109,7 @@ automatically from your Languages table above - don't duplicate them here. -->
 - No relocation / on-site-only roles - remote only
 - No pure legacy-maintenance roles - looking for modernization/architecture-ownership work
 - No crypto exchanges / crypto trading platforms (business model objection, e.g. Kraken, OKX, Binance, Coinbase)
+- No gambling, betting, or casino companies (business model objection, e.g. BlueLabs, Mifal HaPais-style operators, any sportsbook/iGaming platform)
 - No defense/intelligence/security-clearance work (values objection - applies even to roles that wouldn't require the candidate personally to hold a clearance)
 - No company with any business relationship with Israel (offices/R&D presence, investors, acquisitions, major customers or partnerships) - values objection, checked via dedicated web search before applying, not just posting text. Caveat: this cannot be guaranteed exhaustive - some relationships aren't publicly discoverable. For staffing/outstaffing postings (e.g. BairesDev) that don't name the end client, the staffing company itself is checked, but the undisclosed client cannot be verified until named.
 

@@ -68,7 +68,7 @@ For each **enabled** portal skill:
 
 1. Read its `SKILL.md` to find the correct `bun run …` invocation and supported flags.
 2. Translate the query terms from `search-queries.md` into that portal's flag format (e.g. `--key`, `--search-string`, `--query`, filter codes — whatever the portal's SKILL.md specifies).
-3. Scope to the last 14 days using the portal's supported recency **filter** flag (`--jobage`, `--since <YYYY-MM-DD>`, etc. — as documented per portal). A portal with **no recency flag** (jobdanmark offers none) still gets scoped: every portal's search output carries a `date` field, so filter client-side — drop results whose `date` is older than 14 days after the call returns, and never invent a flag the portal's SKILL.md does not document (the CLIs reject unknown flags). `--order PublicationDate` is a sort, and a sort is not a filter — pairing it with a `--limit` is a defensible approximation on a portal that offers nothing better (jobnet), but apply the client-side date filter on top all the same.
+3. **Do not scope by posting age.** An old-but-still-open posting is a legitimate, currently-live opening - posting age is informational only (persisted as `posted_date` in Step 4), never grounds for exclusion. Don't pass a portal's recency **filter** flag (`--jobage`, `--since <YYYY-MM-DD>`, etc.) unless the user asked to narrow by freshness - using it by default silently excludes old-but-active listings from ever reaching the pool, which is exactly what this step used to do and what missed a real strong-fit match on 2026-11-10 (see `feedback_linkedin_location_filter_gap` note in memory for that incident; the fix here is the age side of the same lesson). A **sort** flag like `--order PublicationDate` is fine to use since it only orders results, never excludes any. The only thing that excludes a posting from the pool is being shown closed/expired/inactive at the source - see Step 2's Closed-at-source detection, which is the real gate now, not age.
 4. Cap results to ~20 per call using the portal's limit flag.
 5. Use `--format json` for machine-readable output.
 
@@ -104,8 +104,7 @@ and URL. For jobs worth a deeper look, fetch full detail with that portal's `det
 command (see its SKILL.md — do not guess flags) to extract **key requirements**,
 **application deadline**, and a brief description snippet.
 
-**Closed-at-source detection:** `linkedin-search detail` also returns `isActive`.
-`false` means the posting page itself renders LinkedIn's "No longer accepting
+**Closed-at-source detection:** since posting age is no longer a filter (see Step 1b), this is the check that keeps old postings honest — fetch detail on anything worth a deeper look regardless of how old it looks, and let the source's own status tell you whether it's still live. `linkedin-search detail` returns `isActive`: `false` means the posting page itself renders LinkedIn's "No longer accepting
 applications" banner — the job died between being indexed and being fetched (expired
 LinkedIn URLs redirect to *similar live jobs*, so a search hit can be a ghost). Mark
 such a job, never silently drop it: write its entry to `job_scraper/seen_jobs.json` in Step 4 with
@@ -113,6 +112,8 @@ such a job, never silently drop it: write its entry to `job_scraper/seen_jobs.js
 looks identical to a job never seen, and the recorded status is what makes a later
 ghost report self-triaging. `isActive: true` is only the absence of that banner, not
 proof the posting is open; deadlines and dead URLs remain `/rank`'s job.
+
+Other portals don't all expose an explicit active/status field the way LinkedIn does. Where a portal's `detail` output does carry one (e.g. a `status` or `isActive`-equivalent field — check its SKILL.md), use it the same way. Where it doesn't, treat a `detail` fetch that returns a real, matching posting (not a 404, not a redirect to an unrelated listing, not an explicit "this role has been filled/closed" notice) as sufficient evidence the posting is still live — the same bar already applied to confirm a hit is a real posting and not a dead link.
 
 **From WebSearch results:** Use `WebFetch` on the posting URL and extract the same
 fields manually. If it returns HTTP 403, retry with browser headers via `python3 tools/fetch_page.py` per
@@ -304,7 +305,7 @@ If the user decides to apply to any job, the tracker row is written by **job-app
 1. **Never fabricate job postings.** Only present jobs from actual CLI search/detail output or WebSearch/WebFetch results.
 2. **Respect deduplication.** Always check job_scraper/seen_jobs.json AND job_search_tracker.csv before presenting.
 3. **Focus on configured geographic area.** Skip jobs that require relocation or are clearly outside commute range.
-4. **Only open positions.** Skip postings with expired deadlines or those marked as closed.
+4. **Only open positions, regardless of age.** Skip postings with expired deadlines or those marked closed/inactive at the source — never skip one merely because it was posted long ago. An old listing that's still live at the source is still worth presenting.
 5. **Be efficient with detail fetches.** Don't run `detail` or WebFetch on every search hit — pre-filter by title/snippet, then fetch only promising matches.
 6. **Parallel searches.** Run portal CLI searches in parallel; use WebSearch only for gaps the CLIs don't cover.
 7. **No automated people lookups.** Referral contacts (Step 4.5) are LinkedIn search links only - never fetch or scrape LinkedIn people-search result pages programmatically.

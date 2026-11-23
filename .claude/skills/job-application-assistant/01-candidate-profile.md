@@ -53,11 +53,14 @@ a hard no, not a gap to smooth over. -->
 ### Senior Software Engineer - Prima Assicurazioni (Jun 2022 - Current)
 Remote
 - Led the development of an installment scheduler backend enabling customers to split policy payments into monthly rates, built entirely in Rust using Apalis for job scheduling and Postgres as the backend, with a declarative, pure-functional core implemented as a state machine following a hexagonal architecture
+  - Incident (STAR candidate): a few months after launch, a customer's payment failed because a third-party payment provider's API was down mid-call, and the error handling didn't account for that specific failure mode, leaving the state machine inconsistent. Traced and manually recovered the correct installment state for that customer; recovery took a few hours. Root cause: the external-dependency failure path wasn't tested as rigorously as the happy path. Follow-up: now treats third-party API failures as a first-class case to design and test for in anything touching money or irreversible state.
 - Led the extraction of the Policy Management domain from a legacy monolith into a dedicated Rust microservice, overseeing CI/CD, gRPC APIs, and cross-domain integrations
-- Pioneered internal gRPC adoption; defined Protobuf APIs, published Rust and Elixir libraries, and implemented services with tracing, reflection, and integration testing
+- Pioneered internal gRPC adoption; defined Protobuf APIs, published Rust and Elixir client libraries that other engineering teams integrated against, and implemented services with tracing, reflection, and integration testing
 - Contributed to the extraction of disclosure services using Kafka to manage asynchronous communication with 3rd-party systems
 - Maintained full-stack services for the Claims Payments domain using Elixir (CQRS & Event Sourcing) and Rust (anti-corruption layers) for 3rd-party API integrations
 - Led the rebuild of a distributed email ingestion engine using Rust, Postgres, and RabbitMQ; applied hexagonal architecture and implemented high-resolution observability (tracing/metrics) via Datadog
+  - Impact: before the rebuild there was no reliable way to track how many claims were being lost during ingestion, let alone diagnose why a given one failed. After the rebuild, lost claims dropped by almost 100%, and every remaining ingestion failure became traceable to a specific cause via the built-in observability, saving significant manual debugging time and preventing claim losses. Deliberate tradeoff: built narrowly for this ingestion pipeline rather than as a general-purpose reusable framework, prioritizing correctness and transparency for this system over speculative shared infrastructure - accepted cost being that a similar pipeline elsewhere would need its own build rather than reuse.
+- Used Pulumi for infrastructure-as-code to provision and manage cloud infrastructure
 - Contributed to the Spanish product launch (Rust/GraphQL/Elm) and introduced automated testing frameworks for Elixir LiveView and Elm
 
 ### Full Stack Developer - TalentBait (Sep 2021 - Jun 2022)
@@ -76,6 +79,7 @@ Remote
 ### Fullstack Developer - Solve The X (Mar 2021 - Aug 2021)
 Barcelona, Spain
 - Migrated legacy REST APIs (PHP/MySQL) to GraphQL backed by Postgres, providing efficient server-side rendered content
+- Worked with MongoDB as part of the backend stack
 - Built an asynchronous email notification service using TypeScript and RabbitMQ, contributing to CI automation via GitHub Actions
 - Enhanced system reliability by introducing Sentry for metrics/logging and implementing automated E2E and UI testing
 
@@ -89,7 +93,7 @@ Barcelona, Spain
 - **Rust** (Primary): Async web development with the Tokio ecosystem (Tokio, Tower, Tonic, Axum), Apalis, gRPC/Protobuf, hexagonal architecture, CQRS/anti-corruption layers
 - **Elixir** (Primary): OTP, Phoenix, LiveView, Ash, Nerves, CQRS & Event Sourcing
 - **TypeScript/Node.js** (Primary): RabbitMQ-based services, Firebase
-- GraphQL, Kafka, RabbitMQ, Postgres, Kubernetes, AWS, Flutter/Dart, Elm (frontend)
+- GraphQL, Kafka, RabbitMQ, Postgres, Kubernetes, AWS, Pulumi, Flutter/Dart, Elm (frontend)
 
 ### Domain Expertise
 - Distributed systems and microservices extraction from legacy monoliths
